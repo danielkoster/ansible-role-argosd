@@ -10,15 +10,11 @@ galaxy_info:
   platforms:
     - name: Debian
       versions:
-      - wheezy
       - jessie
       - stretch
       - sid
     - name: Ubuntu
       versions:
-      - precise
-      - trusty
-      - vivid
       - xenial
       - yakkety
   galaxy_tags:

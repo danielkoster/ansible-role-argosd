@@ -8,9 +8,6 @@ env:
   - distro: ubuntu1604
     init: /lib/systemd/systemd
     run_opts: "--privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro"
-  - distro: ubuntu1404
-    init: /sbin/init
-    run_opts: ""
   - distro: debian8
     init: /lib/systemd/systemd
     run_opts: "--privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro"
@@ -38,9 +35,6 @@ script:
     | grep -q 'changed=0.*failed=0'
     && (echo 'Idempotence test: pass' && exit 0)
     || (echo 'Idempotence test: fail' && exit 1)
-
-  # Ensure our service is running by calling the API
-  - 'docker exec "$(cat ${container_id})" curl -I http://localhost:27467'
 
 notifications:
   webhooks: https://galaxy.ansible.com/api/v1/notifications/
