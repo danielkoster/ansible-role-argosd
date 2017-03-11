@@ -52,6 +52,7 @@
   command: "python3 /opt/argosd/setup.py install"
   args:
     chdir: /opt/argosd/
+    creates: /etc/systemd/system/argosd.service
 
 - name: "argosd | Start service"
   service:
