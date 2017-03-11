@@ -1,0 +1,60 @@
+---
+
+- name: "argosd | Install required packages"
+  apt:
+    pkg: "{{ item }}"
+    state: present
+  with_items:
+    - git
+    - virtualenv
+    - python3
+    - python3-setuptools
+
+- name: "argosd | Create argosd system user"
+  user:
+    name: argosd
+    system: yes
+
+- name: "argosd | Create /opt/argosd/ directory"
+  file:
+    path: /opt/argosd
+    state: directory
+    owner: argosd
+    group: argosd
+
+- name: "argosd | Clone & update git repository"
+  git:
+    repo: https://github.com/danielkoster/argosd.git
+    dest: /opt/argosd/
+    depth: 1
+  become: yes
+  become_user: argosd
+
+- name: "argosd | Create virtualenv"
+  pip:
+    requirements: /opt/argosd/requirements.txt
+    virtualenv: /opt/argosd/.virtualenv
+    virtualenv_python: python3
+  become: yes
+  become_user: argosd
+  notify: "argosd | restart service"
+
+- name: "argosd | Create settings file"
+  template:
+    src: settings_local.py.j2
+    dest: /opt/argosd/argosd/settings_local.py
+    owner: argosd
+    group: argosd
+    mode: 0644
+  notify: "argosd | restart service"
+
+- name: "argosd | Install argosd to system"
+  command: "python3 /opt/argosd/setup.py install"
+  args:
+    chdir: /opt/argosd/
+
+- name: "argosd | Start service"
+  service:
+    name: argosd
+    state: started
+    enabled: yes

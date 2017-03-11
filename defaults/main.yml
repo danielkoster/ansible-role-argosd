@@ -1,0 +1,8 @@
+---
+
+argosd_rss_feed: ''
+argosd_transmission_host: 'localhost'
+argosd_transmission_port: 9091
+argosd_transmission_username: ''
+argosd_transmission_password: ''
+argosd_api_token: ''

@@ -1,0 +1,28 @@
+# {{ ansible_managed }}
+
+from argosd.settings_default import *
+
+
+"""The URL to your RSS-feed. This should be a feed containing a channel
+with items that have a title and a link."""
+RSS_FEED = '{{ argosd_rss_feed }}'
+
+"""Specify how we can connect to the Transmission server.
+An RPC connection is made, so check these settings in Transmission."""
+TRANSMISSION_HOST = '{{ argosd_transmission_host }}'
+TRANSMISSION_PORT = {{ argosd_transmission_port}}
+TRANSMISSION_USERNAME = '{{ argosd_transmission_username }}'
+TRANSMISSION_PASSWORD = '{{ argosd_transmission_password }}'
+
+"""Create an API token. You will have to send this token
+with each API request you make. Keep it safe!"""
+API_TOKEN = '{{ argosd_api_token }}'
+
+"""Optional override for the download directory where the torrentclient
+will download the episodes to. If set to None, episodes will be downloaded
+to the default location as determined by the torrentclient."""
+TORRENTCLIENT_DOWNLOAD_DIR = {% if argosd_torrentclient_download_dir is defined %}'{{ argosd_torrentclient_download_dir }}'{% else %}None{% endif %}
+
+"""Optional token for Telegram bot. This bot will send you notifications
+whenever a new episode is downloaded."""
+TELEGRAM_BOT_TOKEN = {% if argosd_telegram_bot_token is defined %}'{{ argosd_telegram_bot_token }}'{% else %}None{% endif %}

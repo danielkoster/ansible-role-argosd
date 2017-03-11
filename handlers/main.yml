@@ -1,0 +1,6 @@
+---
+
+- name: "argosd | restart service"
+  service:
+    name: argosd
+    state: restarted
