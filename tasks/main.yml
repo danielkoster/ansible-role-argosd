@@ -22,6 +22,14 @@
     owner: argosd
     group: argosd
 
+- name: "argosd | Create overriden download directory"
+  file:
+    path: "{{ argosd_torrentclient_download_dir }}"
+    state: directory
+    owner: debian-transmission
+    group: debian-transmission
+  when: "argosd_torrentclient_download_dir is defined"
+
 - name: "argosd | Clone & update git repository"
   git:
     repo: https://github.com/danielkoster/argosd.git
